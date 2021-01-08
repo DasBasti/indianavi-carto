@@ -1,4 +1,4 @@
-# OpenStreetMap Carto
+# OpenStreetMap Carto fork for India Navi
 
 ![screenshot](https://raw.github.com/gravitystorm/openstreetmap-carto/master/preview.png)
 
