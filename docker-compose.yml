@@ -1,8 +1,10 @@
 version: '2'
+volumes:
+  postgis-data:
+
 services:
   kosmtik:
-    image: kosmtik:v1
-    platform: linux/amd64
+    image: joxit/kosmtik:latest
     build:
       context: .
       dockerfile: Dockerfile
@@ -11,12 +13,14 @@ services:
     depends_on:
       - db
     ports:
-      - "127.0.0.1:6789:6789"
+      - "62.171.131.55:6789:6789"
     environment:
       - PGHOST=db
       - PGUSER=postgres
   db:
     image: db:v1
+    volumes:
+      - postgis-data:/var/lib/postgresql
     build:
       context: .
       dockerfile: Dockerfile.db
@@ -31,6 +35,8 @@ services:
       dockerfile: Dockerfile.import
     volumes:
       - .:/openstreetmap-carto
+      - ../hessen-latest.osm.pbf:/data/region.osm.pbf
+#      - ../europe.poly:/data/europe.poly
     depends_on:
       - db
     environment:
@@ -42,3 +48,8 @@ services:
       - OSM2PGSQL_NUMPROC
       - OSM2PGSQL_DATAFILE
       - EXTERNAL_DATA_SCRIPT_FLAGS
+      - OSM2PGSQL_DATAFILE=/data/region.osm.pbf
+      - PG_WORK_MEM=512MB 
+      - PG_MAINTENANCE_WORK_MEM=2GB 
+      - OSM2PGSQL_CACHE=4096 
+      - OSM2PGSQL_NUMPROC=10
