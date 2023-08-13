@@ -24,11 +24,11 @@ def main():
     config['base']['font_width'] = 6.2
     config['base']['padding_x'] = 4
     config['base']['padding_y'] = 2
-    config['base']['stroke_width'] = 1
+    config['base']['stroke_width'] = 1.2
 
     # Fall back colours used if no colours are defined in road-colours.yaml for a road type.
-    config['base']['fill'] = '#f1f1f1'
-    config['base']['stroke_fill'] = '#c6c6c6'
+    config['base']['fill'] = '#fff'
+    config['base']['stroke_fill'] = '#000'
 
     config['global'] = {}
 
@@ -55,9 +55,9 @@ def main():
     config['z16'] = {}
     config['z18'] = {}
 
-    config['z16']['font_width'] = 6.1
+    config['z16']['font_width'] = 6.3
     config['z16']['font_height'] = 14.1
-    config['z18']['font_width'] = 6.9
+    config['z18']['font_width'] = 7.3
     config['z18']['font_height'] = 15.1
 
     if not os.path.exists(os.path.dirname(config['global']['output_dir'])):
@@ -104,11 +104,11 @@ def main():
                         shield.set('rx', str(vars['rounded_corners']))
                         shield.set('ry', str(vars['rounded_corners']))
 
-                    shield.set('fill', vars['fill'])
+                    shield.set('fill', config['base']['fill'])
 
                     stroke = ''
                     if vars['stroke_width'] > 0:
-                        shield.set('stroke', vars['stroke_fill'])
+                        shield.set('stroke', config['base']['stroke_fill'])
                         shield.set('stroke-width', str(vars['stroke_width']))
 
                     svg.append(shield)
